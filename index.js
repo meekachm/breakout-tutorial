@@ -11,9 +11,9 @@ const paddleWidth = 75;
 let paddleX = (canvas.width - paddleWidth) / 2;
 let rightPressed = false;
 let leftPressed = false;
-const brickColumnCount = 5;
+const brickColumnCount = 10;
 const brickRowCount = 3;
-const brickWidth = 75;
+const brickWidth = 33;
 const brickHeight = 20;
 const brickPadding = 10;
 const brickOffsetTop = 30;
@@ -69,8 +69,17 @@ function collisionDetection() {
         ) {
           dy = -dy;
           b.status = 0;
-          score += 1;
-          if (score === brickRowCount * brickColumnCount) {
+
+          //  Assign points based on the row
+          if (r === 0) {
+            score += 30;
+          } else if (r === 1) {
+            score += 20;
+          } else {
+            score += 10;
+          }
+
+          if (score === brickRowCount * brickColumnCount * 30) {
             alert('YOU WIN, CONGRATULATIONS!');
             document.location.reload();
           }
@@ -83,7 +92,7 @@ function collisionDetection() {
 function drawBall() {
   ctx.beginPath();
   ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-  ctx.fillStyle = '#0095DD';
+  ctx.fillStyle = '#6E6D6D';
   ctx.fill();
   ctx.closePath();
 }
@@ -91,12 +100,14 @@ function drawBall() {
 function drawPaddle() {
   ctx.beginPath();
   ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-  ctx.fillStyle = '#0095DD';
+  ctx.fillStyle = '#6E6D6D';
   ctx.fill();
   ctx.closePath();
 }
 
 function drawBricks() {
+  const brickColors = ['#FFD1DC', '#FFB6C1', '#FFA07A', '#FFD700', '#98FB98', '#ADD8E6', '#87CEEB', '#D8BFD8', '#FFE4E1', '#FFA07A'];
+
   for (let c = 0; c < brickColumnCount; c += 1) {
     for (let r = 0; r < brickRowCount; r += 1) {
       if (bricks[c][r].status === 1) {
@@ -106,7 +117,7 @@ function drawBricks() {
         bricks[c][r].y = brickY;
         ctx.beginPath();
         ctx.rect(brickX, brickY, brickWidth, brickHeight);
-        ctx.fillStyle = '#0095DD';
+        ctx.fillStyle = brickColors[c % brickColors.length];
         ctx.fill();
         ctx.closePath();
       }
@@ -116,13 +127,13 @@ function drawBricks() {
 
 function drawScore() {
   ctx.font = '16px Arial';
-  ctx.fillStyle = '#0095DD';
+  ctx.fillStyle = '#6E6D6D';
   ctx.fillText(`Score: ${score}`, 8, 20);
 }
 
 function drawLives() {
   ctx.font = '16px Arial';
-  ctx.fillStyle = '#0095DD';
+  ctx.fillStyle = '#6E6D6D';
   ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
 }
 
