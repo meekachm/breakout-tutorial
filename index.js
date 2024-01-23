@@ -1,6 +1,7 @@
 /* eslint-disable no-alert */
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+
 let x = canvas.width / 2;
 let y = canvas.height - 30;
 let dx = 2;
@@ -29,24 +30,24 @@ for (let c = 0; c < brickColumnCount; c += 1) {
   }
 }
 
-function keyDownHandler(e) {
-  if (e.key === 'Right' || e.key === 'ArrowRight') {
+function keyDownHandler({ key }) {
+  if (key === 'Right' || key === 'ArrowRight') {
     rightPressed = true;
-  } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
+  } else if (key === 'Left' || key === 'ArrowLeft') {
     leftPressed = true;
   }
 }
 
-function keyUpHandler(e) {
-  if (e.key === 'Right' || e.key === 'ArrowRight') {
+function keyUpHandler({ key }) {
+  if (key === 'Right' || key === 'ArrowRight') {
     rightPressed = false;
-  } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
+  } else if (key === 'Left' || key === 'ArrowLeft') {
     leftPressed = false;
   }
 }
 
-function mouseMoveHandler(e) {
-  const relativeX = e.clientX - canvas.offsetLeft;
+function mouseMoveHandler({ clientX }) {
+  const relativeX = clientX - canvas.offsetLeft;
   if (relativeX > 0 && relativeX < canvas.width) {
     paddleX = relativeX - paddleWidth / 2;
   }
