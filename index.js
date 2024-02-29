@@ -2,18 +2,17 @@
 import Ball from './Ball.js';
 import Brick from './Brick.js';
 import Paddle from './Paddle.js';
-import Score from './Score.js';
-import Lives from './Lives.js';
+import Game from './Game.js';
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-const score = new Score(8, 20);
-const lives = new Lives(canvas.width - 65, 20);
+const score = new Game(8, 20, 0);
+const lives = new Game(canvas.width - 65, 20, 3);
 
 const ballRadius = 10;
 const paddleHeight = 10;
-const paddleWidth = 25;
+const paddleWidth = 75;
 const brickColumnCount = 14;
 const brickRowCount = 8;
 const brickWidth = 25;
@@ -91,7 +90,7 @@ function collisionDetection() {
             score.update(10);
           }
 
-          if (score.score === brickRowCount * brickColumnCount) {
+          if (score.value === brickRowCount * brickColumnCount) {
             alert('YOU WIN, CONGRATULATIONS!');
             document.location.reload();
           }
@@ -127,21 +126,13 @@ function drawBricks() {
   }
 }
 
-function drawScore() {
-  score.render(ctx);
-}
-
-function drawLives() {
-  lives.render(ctx, canvas);
-}
-
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawBricks();
   drawBall();
   drawPaddle();
-  drawScore();
-  drawLives();
+  score.render(ctx);
+  lives.render(ctx);
   collisionDetection();
 
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
@@ -153,7 +144,7 @@ function draw() {
     if (x + ballRadius > paddleX && x - ballRadius < paddleX + paddleWidth) {
       dy = -dy;
     } else if (y + dy > canvas.height - ballRadius) {
-      lives.loseLife();
+      lives.update(-1); // Decrease lives by 1
       x = canvas.width / 2;
       y = canvas.height - 30;
       dx = 2;

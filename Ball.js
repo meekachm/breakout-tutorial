@@ -8,11 +8,6 @@ class Ball extends Sprite {
     this.dy = -2;
   }
 
-  move() {
-    this.x += this.dx;
-    this.y += this.dy;
-  }
-
   render(ctx) {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
