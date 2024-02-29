@@ -1,4 +1,4 @@
-import Sprite from './Sprite.js';
+import Sprite from './Sprite.ts';
 
 class Game extends Sprite {
   constructor(x, y, value = 0, color = 'white', font = '36px Arial') {
@@ -10,6 +10,7 @@ class Game extends Sprite {
   update(points) {
     this.value = (parseInt(this.value, 10) + points).toString().padStart(3, '0');
     if (this.value === '000') {
+      // eslint-disable-next-line no-alert
       alert('GAME OVER');
       document.location.reload();
     }

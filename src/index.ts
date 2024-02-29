@@ -1,7 +1,7 @@
-import Ball from './Ball';
-import Brick from './Brick';
-import Paddle from './Paddle';
-import Game from './Game';
+import Ball from './Ball.ts';
+import Brick from './Brick.ts';
+import Paddle from './Paddle.ts';
+import Game from './Game.ts';
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -90,6 +90,7 @@ function collisionDetection(): void {
           }
 
           if (score.value === brickRowCount * brickColumnCount) {
+            // eslint-disable-next-line no-alert
             alert('YOU WIN, CONGRATULATIONS!');
             document.location.reload();
           }
@@ -105,7 +106,12 @@ function drawBall(): void {
 }
 
 function drawPaddle(): void {
-  const paddle: Paddle = new Paddle(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+  const paddle: Paddle = new Paddle(
+    paddleX,
+    canvas.height - paddleHeight,
+    paddleWidth,
+    paddleHeight,
+  );
   paddle.render(ctx);
 }
 

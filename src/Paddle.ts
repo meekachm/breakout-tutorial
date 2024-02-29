@@ -1,4 +1,4 @@
-import Sprite from './Sprite.js';
+import Sprite from './Sprite.ts';
 
 class Paddle extends Sprite {
   constructor(x, y, width = 75, height = 10, color = '#0095DD') {
